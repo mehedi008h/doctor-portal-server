@@ -20,61 +20,13 @@ async function run() {
         await client.connect();
         console.log('Connected to database');
         const database = client.db('doctorPortal');
-        // const servicesCollection = database.collection('service');
-        // const bookingCollection = database.collection('booking');
+        const appointmentsCollection = database.collection('appointment');
 
-        // // GET API
-        // app.get('/service', async (req, res) => {
-        //     const cursor = servicesCollection.find({});
-        //     const service = await cursor.toArray();
-        //     res.send(service);
-        // });
-
-
-        // // get single service
-        // app.get('/service-details/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     console.log("Getting single data : ", id);
-        //     const query = { _id: ObjectId(id) };
-        //     const service = await servicesCollection.findOne(query);
-        //     res.json(service);
-        // });
-
-        // // post api
-        // app.post('/service', async (req, res) => {
-        //     const service = req.body;
-        //     console.log("Hit the post api", service);
-
-        //     const result = await servicesCollection.insertOne(service);
-        //     console.log(result);
-        //     res.json(result);
-        // });
-
-        // // GET API
-        // app.get('/booking', async (req, res) => {
-        //     const cursor = bookingCollection.find({});
-        //     const booking = await cursor.toArray();
-        //     res.send(booking);
-        // });
-
-        // // post api
-        // app.post('/booking', async (req, res) => {
-        //     const booking = req.body;
-        //     console.log("Hit the post api", booking);
-
-        //     const result = await bookingCollection.insertOne(booking);
-        //     console.log(result);
-        //     res.json(result);
-        // });
-
-
-        // // delete booking
-        // app.delete('/booking/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const query = { _id: ObjectId(id) };
-        //     const result = await bookingCollection.deleteOne(query);
-        //     res.json(result);
-        // });
+        app.post('/appointments', async (req, res) => {
+            const appointment = req.body;
+            const result = await appointmentsCollection.insertOne(appointment);
+            res.json(result)
+        });
 
     }
     finally {
