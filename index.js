@@ -23,6 +23,12 @@ async function run() {
         const appointmentsCollection = database.collection('appointment');
         const usersCollection = database.collection('user');
 
+        // app.get('/users', async (req, res) => {
+        //     const cursor = usersCollection.find({});
+        //     const user = await cursor.toArray();
+        //     res.send(user);
+        // });
+
         app.post('/users', async (req, res) => {
             const user = req.body;
             const result = await usersCollection.insertOne(user);
@@ -37,6 +43,15 @@ async function run() {
             const updateDoc = { $set: user };
             const result = await usersCollection.updateOne(filter, updateDoc, options);
             res.json(result);
+        });
+
+        // get single product
+        app.get('/dashboard/profile/:email', async (req, res) => {
+            const email = req.params.email;
+            console.log("Getting single data : ", email);
+            const query = { email: email };
+            const user = await usersCollection.findOne(query);
+            res.json(user);
         });
 
         app.get('/appointments', async (req, res) => {
